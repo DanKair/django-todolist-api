@@ -1,5 +1,9 @@
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 from .models import Task
 from .serializers import TaskSerializer
 
@@ -17,3 +21,8 @@ class TaskUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDe
     serializer_class = TaskSerializer
     # looking for primary key, which stands for item id
     lookup_field = "pk"
+
+# JWT Authentication related
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
