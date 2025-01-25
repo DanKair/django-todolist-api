@@ -1,0 +1,14 @@
+# DB related
+db.sqlite3
+*.sqlite3
+# Environment variables / Virtual environments
+.env
+.venv/
+venv/
+# Cache related
+__pycache__/
+*/__pycache__/
+*.pyc
+# IDE settings
+.idea/
+.vscode/
