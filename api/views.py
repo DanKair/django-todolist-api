@@ -22,7 +22,11 @@ class TaskUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDe
     # looking for primary key, which stands for item id
     lookup_field = "pk"
 
-# JWT Authentication related
+# JWT Authentication related, if user IsAuthenticated, then he gets the content message
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        content = {'message': 'Welcome, you are authorized!'}
+        return Response(content)
