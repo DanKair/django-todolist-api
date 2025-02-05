@@ -5,5 +5,5 @@ from .views import UserDetailView, UserRegisterView
 urlpatterns = [
     path('',UserDetailView.as_view()),
     path('register/', UserRegisterView.as_view()),
-    #path('<int:pk>'),
+    path("<int:user_id>", views.UserUpdateDelete.as_view(), name="user-view-update-delete"),
 ]

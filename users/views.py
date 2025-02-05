@@ -16,9 +16,16 @@ class UserRegisterView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
 # All Users Detail view ( sure you can't see the password)
-class UserDetailView(generics.ListCreateAPIView):
+class UserDetailView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+class UserUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDestroy allow us to Update and Delete items
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    # looking for primary key, which stands for item id
+    lookup_url_kwarg = "user_id"
 

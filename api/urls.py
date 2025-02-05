@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from .views import Home
+from .views import AuthCheck
 
 urlpatterns = [
     path("task/create", views.TaskCreate.as_view(), name="task-view-create"),
     path("task/<int:pk>", views.TaskUpdateDelete.as_view(), name="task-view-update-delete"),
-    path('home', Home.as_view()),
+    path('auth_check', AuthCheck.as_view()),
 ]

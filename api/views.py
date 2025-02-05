@@ -38,7 +38,7 @@ class TaskUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDe
         return Task.objects.filter(user=self.request.user)
 
 # JWT Authentication related, if user IsAuthenticated, then he gets the content message
-class Home(APIView):
+class AuthCheck(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
