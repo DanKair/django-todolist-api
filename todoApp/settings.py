@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 from datetime import timedelta
+
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p*)q5g3_9%i4e1e-qq)eb0c3985-e^g$&c#@gd$a-wur#32j$1'
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -124,8 +130,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = 'media/'
 
 # Static and Media file configuration
-import os
-from pathlib import Path
+
 
 # Define the BASE_DIR path
 BASE_DIR = Path(__file__).resolve().parent.parent

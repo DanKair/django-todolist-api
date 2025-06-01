@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from .models import CustomUser
 
@@ -16,16 +17,20 @@ class UserSerializer(serializers.ModelSerializer):
     """
 
 class UserRegisterationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8)
     class Meta:
         model = CustomUser
         fields = ['id', 'name', 'email', 'password']
-        extra_kwargs = {"password": {"write_only": True}}
+
 
     def create(self, validated_data):
         # Creating user using create_user method
+        validated_data['password'] = make_password(validated_data['password'])
         user = CustomUser.objects.create_user(**validated_data)
         user.save()
         return user
+
+
 
 
 class UserLoginSerializer(serializers.Serializer):
