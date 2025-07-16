@@ -8,22 +8,16 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import CustomUser
-from .serializers import UserSerializer, UserRegisterationSerializer, UserLoginSerializer
+from .serializers import UserSerializer, UserLoginSerializer, UserRegisterSerialzer
 
-
-# Old User registration View at /users/register endpoint
-# class UserRegisterView(generics.CreateAPIView):
-    # queryset = CustomUser.objects.all()
-    # serializer_class = UserSerializer
-    # permission_classes = [AllowAny]
 
 # User Register View
 class UserRegisterAPIView(GenericAPIView):
     permission_classes = [AllowAny]
-    serializer_class = UserRegisterationSerializer
+    serializer_class =UserRegisterSerialzer
 
     # After passing the data, user gets his refresh / access tokens
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -38,7 +32,7 @@ class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
 
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
@@ -53,8 +47,9 @@ class UserLoginAPIView(GenericAPIView):
 class UserDetailView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
 
 class UserUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDestroy allow us to Update and Delete items
     queryset = CustomUser.objects.all()
@@ -62,6 +57,7 @@ class UserUpdateDelete(generics.RetrieveUpdateDestroyAPIView): #RetrieveUpdateDe
     permission_classes = [IsAdminUser]
     # looking for primary key, which stands for user id
     lookup_url_kwarg = "user_id"
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -82,3 +78,4 @@ class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response({"message": "Logged out successfully"}, status=200)
+

@@ -1,9 +1,12 @@
+from tkinter.font import names
+
 from django.urls import path
 from . import views
 from .views import AuthCheck
 
 urlpatterns = [
-    path("task/create", views.TaskCreate.as_view(), name="task-view-create"),
-    path("task/<int:pk>", views.TaskUpdateDelete.as_view(), name="task-view-update-delete"),
+    path("tasks/", views.get_tasks, name="List All Tasks"),
+    path("task/create", views.create_task, name="Task Create"),
+    path("task/<int:id>", views.get_task_by_id, name="Access Task By ID"),
     path('auth_check', AuthCheck.as_view()),
 ]
